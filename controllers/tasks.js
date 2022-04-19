@@ -3,7 +3,9 @@ const asyncWrapper = require("../middleware/async");
 
 const getAllTasks = asyncWrapper(async (req, res) => {
 	const allTasks = await Task.find({});
-	res.status(200).json({ allTasks });
+	res
+		.status(200)
+		.json({ status: "Success", data: { task: allTasks, nbHits: allTasks.length } });
 });
 
 const getOneTask = async (req, res, next) => {
@@ -20,14 +22,18 @@ const includeTask = asyncWrapper(async (req, res, next) => {
 
 const updateTask = async (req, res, next) => {
 	const { id } = req.params;
-	const task = await Task.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
+	const task = await Task.findByIdAndUpdate(id, req.body, {
+		new: true,
+		runValidators: true,
+	});
 	res.status(201).json({ task });
 };
 
 const deleteTask = async (req, res) => {
 	const { id } = req.params;
 	const task = await Task.findByIdAndDelete(id);
-	if (!task) return res.status(404).json({ msg: `Task with id ${id} not found` });
+	if (!task)
+		return res.status(404).json({ msg: `Task with id ${id} not found` });
 	res.status(200).json({ msg: "Task deleted" });
 };
 
