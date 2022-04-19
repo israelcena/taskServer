@@ -18,8 +18,10 @@ const includeTask = asyncWrapper(async (req, res, next) => {
 	res.status(201).json({ task });
 });
 
-const updateTask = (req, res, next) => {
-	res.send("Update Task!");
+const updateTask = async (req, res, next) => {
+	const { id } = req.params;
+	const task = await Task.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
+	res.status(201).json({ task });
 };
 
 const deleteTask = async (req, res) => {
