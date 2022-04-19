@@ -5,13 +5,17 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const tasksRouter = require('./routes/tasks');
-
+require("dotenv").config();
+const connectDB = require("./db/connect");
 const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// db connection
+connectDB(process.env.MONGODB_URI);
 
 // Use the routes
 app.use('/', indexRouter);
