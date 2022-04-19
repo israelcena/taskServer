@@ -24,7 +24,6 @@ app.use('/tasks', tasksRouter);
 
 // catch 404 and forward to error handler
 app.use(notFound);
-
 app.use((req, res, next) => {
   next(createError(404));
 });
