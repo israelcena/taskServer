@@ -3,26 +3,25 @@ const getAllTasks = (req, res, next) => {
 };
 
 const getOneTask = (req, res, next) => {
-	res.send("One Task!");
+	res.json({id:req.params.id});
 };
 
 const includeTask = (req, res, next) => {
-	res.send("Include Task!");
-};
-
-const deleteTask = (req, res, next) => {
-	res.send("Delete Task!");
+	res.json(req.body);
 };
 
 const updateTask = (req, res, next) => {
 	res.send("Update Task!");
 };
 
+const deleteTask = (req, res, next) => {
+	res.send("Delete Task!");
+};
 
 module.exports = {
 	getAllTasks,
 	getOneTask,
 	includeTask,
 	deleteTask,
-	updateTask
+	updateTask,
 };
