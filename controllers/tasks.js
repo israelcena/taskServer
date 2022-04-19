@@ -10,10 +10,10 @@ const getOneTask = (req, res, next) => {
 	res.json({ id: req.params.id });
 };
 
-const includeTask = async (req, res, next) => {
+const includeTask = asyncWrapper(async (req, res, next) => {
 	const task = await Task.create(req.body);
 	res.status(201).json({ task });
-};
+});
 
 const updateTask = (req, res, next) => {
 	res.send("Update Task!");
