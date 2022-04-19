@@ -1,16 +1,17 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const indexRouter = require('./routes/index');
-const tasksRouter = require('./routes/tasks');
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const indexRouter = require("./routes/index");
+const tasksRouter = require("./routes/tasks");
 require("dotenv").config();
 const connectDB = require("./db/connect");
 const notFound = require("./middleware/not-found");
+const errorHandlererrorHandlerMiddleware = require("./middleware/error-handler");
 const app = express();
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -19,24 +20,26 @@ app.use(cookieParser());
 connectDB(process.env.MONGODB_URI);
 
 // Use the routes
-app.use('/', indexRouter);
-app.use('/tasks', tasksRouter);
+app.use("/", indexRouter);
+app.use("/tasks", tasksRouter);
 
 // catch 404 and forward to error handler
 app.use(notFound);
 app.use((req, res, next) => {
-  next(createError(404));
+	next(createError(404));
 });
 
 // error handler
-app.use((err, req, res, next) =>{
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(errorHandlererrorHandlerMiddleware);
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+app.use((err, req, res, next) => {
+	// set locals, only providing error in development
+	res.locals.message = err.message;
+	res.locals.error = req.app.get("env") === "development" ? err : {};
+
+	// render the error page
+	res.status(err.status || 500);
+	res.render("error");
 });
 
 module.exports = app;
