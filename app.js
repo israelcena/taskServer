@@ -7,6 +7,7 @@ const indexRouter = require('./routes/index');
 const tasksRouter = require('./routes/tasks');
 require("dotenv").config();
 const connectDB = require("./db/connect");
+const notFound = require("./middleware/not-found");
 const app = express();
 
 app.use(logger('dev'));
@@ -22,6 +23,8 @@ app.use('/', indexRouter);
 app.use('/tasks', tasksRouter);
 
 // catch 404 and forward to error handler
+app.use(notFound);
+
 app.use((req, res, next) => {
   next(createError(404));
 });
