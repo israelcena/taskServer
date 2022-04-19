@@ -1,9 +1,10 @@
 const Task = require("../models/Task");
+const asyncWrapper = require("../middleware/async");
 
-const getAllTasks = async (req, res, next) => {
+const getAllTasks = asyncWrapper(async (req, res) => {
 	const allTasks = await Task.find({});
 	res.status(200).json({ allTasks });
-};
+});
 
 const getOneTask = (req, res, next) => {
 	res.json({ id: req.params.id });
