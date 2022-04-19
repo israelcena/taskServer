@@ -1,9 +1,11 @@
 const asyncWrapper = (fn) => {
-  try{
-    await fn(req, res, next);
-  } catch(err) {
-    next(err);
-  }
+	return async (req, res, next) => {
+		try {
+			await fn(req, res, next);
+		} catch (err) {
+			next(err);
+		}
+	};
 };
 
 module.exports = asyncWrapper;
