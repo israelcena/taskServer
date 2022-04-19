@@ -6,12 +6,12 @@ const getAllTasks = asyncWrapper(async (req, res) => {
 	res.status(200).json({ allTasks });
 });
 
-const getOneTask = asyncWrapper(async (req, res, next) => {
+const getOneTask = async (req, res, next) => {
 	const task = await Task.findById(req.params.id);
 	console.log(task);
 	if (!task) return next.status(404).json({ msg: "Task not found" });
 	res.status(200).json({ task });
-});
+};
 
 const includeTask = asyncWrapper(async (req, res, next) => {
 	const task = await Task.create(req.body);
