@@ -8,7 +8,7 @@ const tasksRouter = require("./routes/tasks");
 require("dotenv").config();
 const connectDB = require("./db/connect");
 const notFound = require("./middleware/not-found");
-const errorHandlererrorHandlerMiddleware = require("./middleware/error-handler");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 const app = express();
 
 app.use(logger("dev"));
@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use(errorHandlererrorHandlerMiddleware);
+app.use(errorHandlerMiddleware);
 
 app.use((err, req, res, next) => {
 	// set locals, only providing error in development
