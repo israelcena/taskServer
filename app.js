@@ -3,7 +3,7 @@ const express = require("express");
 // const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const indexRouter = require("./routes/index");
+const healthCheck = require("./routes/health-check");
 const tasksRouter = require("./routes/tasks");
 require("dotenv").config();
 const connectDB = require("./db/connect");
@@ -20,7 +20,7 @@ app.use(cookieParser());
 connectDB(process.env.MONGODB_URI);
 
 // Use the routes
-app.use("/", indexRouter);
+app.use("/healthCheck", healthCheck);
 app.use("/tasks", tasksRouter);
 
 // catch 404 and forward to error handler
