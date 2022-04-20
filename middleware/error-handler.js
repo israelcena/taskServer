@@ -1,8 +1,7 @@
 const errorHandlerMiddleware = (err, req, res, next) => {
-	console.log(err);
-	return res.status(500).json({
+	console.error(err);
+	return res.status(err.statusCode).json({
 		message: err.message,
-		stack: err.stack,
 	});
 };
 
