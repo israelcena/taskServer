@@ -5,7 +5,13 @@ const getAllTasks = asyncWrapper(async (req, res) => {
 	const allTasks = await Task.find({});
 	res
 		.status(200)
-		.json({ status: "Success", data: { task: allTasks, nbHits: allTasks.length } });
+		.json({
+			status: "Success",
+			data: { 
+				task: allTasks, 
+				tasksLength: allTasks.length 
+			},
+		});
 });
 
 const getOneTask = async (req, res, next) => {
